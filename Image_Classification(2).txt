@@ -1,0 +1,89 @@
+
+import numpy as np
+import tensorflow as tf
+import pandas as pd
+import keras
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Flatten, Dense
+import matplotlib.pyplot as plt
+
+
+
+(X_train,y_train),(X_test,y_test) = keras.datasets.fashion_mnist.load_data()
+
+
+
+X_train.shape
+
+
+
+X_test.shape
+
+
+
+X_train
+
+
+
+plt.imshow(X_train[0])
+print(y_train[0])
+
+
+
+X_train = X_train/255
+X_test = X_test/255
+
+
+
+model = Sequential()
+model.add(Flatten(input_shape=(28,28)))
+model.add(Dense(128, activation = 'relu'))
+model.add(Dense(10, activation = 'softmax'))
+
+
+
+model.compile(optimizer = 'sgd', loss = 'sparse_categorical_crossentropy',metrics = ['accuracy'])
+
+
+
+
+history = model.fit(X_train,y_train, epochs=10, verbose = True, validation_split = 0.2, batch_size=32)
+
+
+
+predictions = model.predict(X_test)
+
+
+
+
+predictions[5]
+
+
+
+
+import random
+n=random.randint(0,9999)
+max_value = np.argmax(predictions[n])
+if max_value == 0:
+    print(f'the image is of T-shirt/top')
+elif max_value ==1:
+    print(f'the image is of Trouser')
+elif max_value ==2:
+    print(f'the image is of Pullover')
+elif max_value ==3:
+    print(f'the image is of Dress')
+elif max_value ==4:
+    print(f'the image is of Coat')
+elif max_value ==5:
+    print(f'the image is of Sandal')
+elif max_value ==6:
+    print(f'the image is of Shirt')
+elif max_value ==7:
+    print(f'the image is of Sneaker')
+elif max_value ==8:
+    print(f'the image is of Bag')
+else :
+    print(f'the image is of Ankle boot')
+# print(f'the highest number is {max_value}')
+plt.imshow(X_test[n])
+

@@ -1,0 +1,62 @@
+1.import pandas as pd
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import Sequential
+import matplotlib.pyplot as plt
+import numpy as np
+from tensorflow.keras.layers import Flatten, Dense
+
+2.(X_train,y_train),(X_test,y_test) = keras.datasets.mnist.load_data()
+
+3.X_train.shape
+
+4.y_train
+
+5.X_train
+
+6.X_train[0]
+
+7.plt.imshow(X_train[0])
+print(y_train[0])
+
+8.X_train = X_train/255
+X_test = X_test/255
+
+9.print(X_test[9999])
+print(X_train[23])
+
+10.X_test.shape
+
+11.model = Sequential()
+
+model.add(Flatten(input_shape=(28,28)))
+model.add(Dense(128, activation = 'relu'))
+model.add(Dense(10, activation = 'softmax'))
+
+12.model.summary()
+
+13.model.compile(optimizer = 'sgd', loss = 'sparse_categorical_crossentropy',metrics = ['accuracy'])
+
+14.history = model.fit(X_train,y_train, epochs=25, verbose = True, validation_split = 0.2, batch_size=32)
+
+15.predictions = model.predict(X_test)
+
+16.predictions[5]
+
+17.import random
+n=random.randint(0,9999)
+max_value = np.argmax(predictions[n])
+print(f'the highest number is {max_value}')
+plt.imshow(X_test[n])
+
+18.plt.title("Loss vs Accuracy")
+plt.xlabel('epochs')
+plt.ylabel('accuracy / loss')
+plt.plot(history.history['loss'],color='red')
+plt.plot(history.history['accuracy'])
+
+19.plt.plot(history.history['loss'], color = 'red')
+plt.plot(history.history['val_loss'])
+
+20.plt.plot(history.history['accuracy'], color = 'red')
+plt.plot(history.history['val_accuracy'])
